@@ -1,56 +1,91 @@
-# Welcome to your Expo app 👋
+# TaskMaster Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple, cross-platform to-do list app built with **Expo** and **React Native**. TaskMaster lets you add tasks, view them in a list, and mark them complete — with everything persisted on-device so your list is still there the next time you open the app.
 
-## Get started
+## Demo Video
 
-1. Install dependencies
+[Watch the walkthrough](https://www.youtube.com/watch?v=B8oeRBkVI0o)
 
+## Features
+
+- **View tasks** — All tasks are shown in a scrollable list, with a friendly empty state when the list is empty.
+- **Add tasks** — A dedicated "Add Task" screen lets you type a title and save it.
+- **Complete tasks** — Tap any task in the list to toggle it between done and not done.
+- **Persistent storage** — Tasks are saved to the device using `AsyncStorage`, so they survive an app restart.
+- **Stack navigation** — Built with Expo Router, moving between the task list and the add-task screen.
+
+## Tech Stack
+
+| Category       | Technology |
+|----------------|------------|
+| Framework      | [Expo](https://expo.dev) (SDK 57) |
+| UI              | React Native 0.86, React 19 |
+| Language       | TypeScript |
+| Navigation     | Expo Router / React Navigation |
+| Local storage  | `@react-native-async-storage/async-storage` |
+
+## Project Structure
+
+```
+TaskMasterMobile/
+├── src/
+│   ├── app/                 # Screens (Expo Router file-based routing)
+│   │   ├── _layout.tsx      # Root stack navigator
+│   │   ├── index.tsx        # Task list screen
+│   │   └── add-task.tsx     # Add task screen
+│   ├── components/          # Shared/reusable UI components
+│   ├── storage.ts           # AsyncStorage read/write helpers
+│   └── types.ts             # Shared TypeScript types (Task)
+├── assets/                  # App icons and images
+├── app.json                 # Expo app configuration
+└── package.json
+```
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (LTS recommended)
+- npm (comes with Node.js)
+- The [Expo Go](https://expo.dev/go) app on your phone (for the quickest way to try it out), or an iOS/Android simulator
+
+### Installation
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/treasuretamb/TaskMasterMobile.git
+   cd TaskMasterMobile
+   ```
+
+2. Install dependencies
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. Start the development server
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. Run the app
+   - Scan the QR code with the Expo Go app on your phone, **or**
+   - Press `a` to open in an Android emulator, **or**
+   - Press `i` to open in an iOS simulator, **or**
+   - Press `w` to open in a web browser
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Usage
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+1. Launch the app — you'll land on the **TaskMaster** screen showing your current tasks (or an empty state if you have none yet).
+2. Tap **+ Add Task** to open the **Add Task** screen.
+3. Type a task title and tap **Save Task** to add it to your list.
+4. Tap any task in the list to mark it complete or incomplete. Your changes are saved automatically.
 
-## Get a fresh project
+## How It Works
 
-When you're ready, run:
+- `src/storage.ts` wraps `AsyncStorage` with two helpers, `loadTasks()` and `saveTasks()`, so the rest of the app never talks to storage directly.
+- `src/app/index.tsx` loads tasks whenever the screen comes into focus (using `useFocusEffect`), so newly added tasks always show up when you navigate back.
+- `src/app/add-task.tsx` builds a new task with a unique numeric id, appends it to the existing list, saves it, and navigates back.
 
-```bash
-npm run reset-project
-```
+## License
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+See [LICENSE](./LICENSE) for details.
